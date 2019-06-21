@@ -34,30 +34,9 @@ export function createStore() {
                     label: '部门',
                     list: []
                 }
-            ]
-        },
-        actions: {
-            getQlsxTitile({ commit }) {
-                this.$http.post('qlsxtitle').then(d => {
-                    commit('addqlsxtitle', d.rows)
-                })
-            },
-            getAgent({ commit }) {
-                this.$http.post('/agent').then(d => {
-                    commit('addagent', d.rows)
-
-                })
-            }
-        },
-        mutations: {
-            addqlsxtitle(state, rows) {
-                rows.forEach(item => {
-                    state.tablist[item.CLASS_TYPE].list.push(item)
-                })
-            },
-            addagent(state, rows) {
-                state.tablist[2].list = rows
-            }
+            ],
+            queryqlsxlistbytitle: [],
+            hotQlsxData: []
         }
     })
 }

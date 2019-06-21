@@ -3,7 +3,7 @@
                 <tk-header>热点服务</tk-header>
                 <div class="container">
                         <tk-scroll>
-                                <tk-cell-one @click="openURL(item.url)" :key=index v-for="(item,index) of rows">
+                                <tk-cell-one @click="openURL(item.url)" :key=index v-for="(item,index) of $store.state.hotQlsxData">
                                         {{item.name}}
                                 </tk-cell-one>
                         </tk-scroll>
@@ -19,7 +19,7 @@ export default {
         },
         created(){
                 this.$http.post('hotQlsx').then(d=>{
-                        this.rows=d.rows;
+                        this.$store.state.hotQlsxData=d.rows;
                 })
         },
         methods:{

@@ -16,8 +16,8 @@
     <div class="qlsxtitle">
         <tk-header>办事指南</tk-header>
         <div class="container" v-cloak>
-            <tk-tab-container :active=selectedLabel v-model="tablist">
-                <div class="tablistcontainer" :key="index" v-for="(item,index) of tablist" :slot="index">
+            <tk-tab-container :active=selectedLabel v-model="$store.state.tablist">
+                <div class="tablistcontainer" :key="index" v-for="(item,index) of $store.state.tablist" :slot="index">
                     <tk-search v-model="searchVal"></tk-search>
                     <!-- <tk-button style="margin-bottom:5px;" @click="active=!active">点击切换显示</tk-button> -->
                     <!-- <tk-button @click="$router.push({
@@ -78,13 +78,25 @@ export default {
         // }).then(d=>{
             
         // })
+        console.log(12);
         this.$http.post('/agent').then(d=>{
-              this.tablist[2].list=d.rows
+              this.$store.state.tablist[2].list=d.rows
         })
         this.$http.post('qlsxtitle').then(d=>{
+            var arr=[{
+                    label: '个人',
+                    list: []
+                },
+                {
+                    label: '法人',
+                    list: []
+                }];
+
             d.rows.forEach(item=>{
-                this.tablist[item.CLASS_TYPE].list.push(item)
+                arr[item.CLASS_TYPE].list.push(item)
             })
+            this.$store.state.tablist[0].list=arr[0].list;
+             this.$store.state.tablist[1].list=arr[1].list;
         })
     },
     mounted(){

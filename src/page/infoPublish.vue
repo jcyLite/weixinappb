@@ -12,9 +12,9 @@
                                 })"
                                 :title="['主题','信息内容','发布时间']"
                                 :data="[
-                                        '主题：'+item.title,
-                                        '信息内容：'+item.message,
-                                        '发布时间：'+item.publishDate
+                                        item.title,
+                                        item.message,
+                                        item.publishDate
                                 ]"
                                 v-for="item of d"></tk-cell>
                 </div>

@@ -1,16 +1,14 @@
 const fs = require('fs')
 const path = require('path')
 const LRU = require('lru-cache')
+const portIsOccupied = require('./config/portIsOccupied.js')
 const express = require('express')
-const favicon = require('serve-favicon')
-const compression = require('compression')
 const microcache = require('route-cache')
 const resolve = file => path.resolve(__dirname, file)
 const { createBundleRenderer } = require('vue-server-renderer')
 const proxy = require('http-proxy-middleware')
 const isProd = process.env.NODE_ENV != 'development';
 const useMicroCache = process.env.MICRO_CACHE !== 'false'
-
 const app = express()
 
 function createRenderer(bundle, options) {
@@ -118,7 +116,9 @@ app.get('*', isProd ? render : (req, res) => {
     readyPromise.then(() => render(req, res))
 })
 
-const port = process.env.PORT || 8081;
-app.listen(port, () => {
-    console.log(`server started at localhost:${port}`)
+var port = conf.port;
+portIsOccupied(port, function(err, port) {
+    app.listen(port, () => {
+        console.log(`server started at http://localhost:${port}`)
+    })
 })

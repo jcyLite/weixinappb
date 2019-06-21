@@ -3,7 +3,7 @@
     "description": "A Vue.js project",
     "private": true,
     "scripts": {
-        "start": "node server",
+        "start": "cross-env NODE_ENV=production node server",
         "dev": "cross-env NODE_ENV=development node server",
         "dev:spa": "node config/development.js",
         "build:spa": "rimraf dist && node config/build.js",
